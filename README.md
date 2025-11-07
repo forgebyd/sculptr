@@ -10,7 +10,7 @@ Give us a ⭐ on [GitHub][my-repo] — it motivates us a lot!
 ![stat github last commit][stat-gh-last-commit]
 ![stat github stars][stat-gh-stars]
 
-> [!INFO]
+> [!NOTE]
 > More documentations are coming soon. Stay tune!!! 
 
 
