@@ -1,0 +1,33 @@
+{
+  "name": "@sculptr/root",
+  "private": true,
+  "author": {
+    "name": "Dwi Payana",
+    "email": "ini.dwiii@gmail.com",
+    "url": "https://github.com/forgebyd"
+  },
+  "volta": {
+    "node": "24.11.0",
+    "pnpm": "10.20.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "biome.check": "biome check --write --unsafe",
+    "biome.format": "biome format --write",
+    "biome.lint": "biome lint --write --unsafe",
+    "commit": "commit",
+    "prepare": "husky",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.4",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@commitlint/prompt-cli": "^20.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "typescript": "^5.9.3"
+  }
+}

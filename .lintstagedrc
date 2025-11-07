@@ -1,0 +1,4 @@
+{
+    "*.ts": ["pnpm run typecheck", "pnpm run biome.check"],
+    "*.{js,json}": ["pnpm run biome.format"]
+}

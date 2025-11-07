@@ -1,0 +1,65 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.3.4/schema.json",
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true
+    },
+    "files": {
+        "ignoreUnknown": true,
+        "includes": ["**/*.ts", "**/*.js", "**/*.json", "**/*.yaml", "**/*.yml"]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineEnding": "lf",
+        "lineWidth": 80,
+        "attributePosition": "auto",
+        "bracketSameLine": false,
+        "bracketSpacing": true,
+        "useEditorconfig": true,
+        "includes": [
+            "**/*.ts",
+            "**/*.js",
+            "**/*.json",
+            "**/*.yaml",
+            "**/*.yml",
+            "!**/package.json",
+            "!**/package-lock.json",
+            "!**/pnpm-lock.yaml",
+            "!**/yarn.lock"
+        ]
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true
+        }
+    },
+    "javascript": {
+        "formatter": {
+            "quoteStyle": "single",
+            "indentStyle": "space",
+            "indentWidth": 4,
+            "lineEnding": "lf",
+            "lineWidth": 80,
+            "arrowParentheses": "always",
+            "attributePosition": "auto",
+            "bracketSameLine": false,
+            "bracketSpacing": true,
+            "operatorLinebreak": "after",
+            "quoteProperties": "asNeeded",
+            "semicolons": "always",
+            "trailingCommas": "es5"
+        }
+    },
+    "assist": {
+        "enabled": true,
+        "actions": {
+            "source": {
+                "organizeImports": "on"
+            }
+        }
+    }
+}
