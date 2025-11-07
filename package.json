@@ -2,7 +2,6 @@
     "name": "@sculptr/root",
     "type": "module",
     "private": true,
-
     "author": {
         "name": "Dwi Payana",
         "email": "ini.dwiii@gmail.com",
@@ -10,14 +9,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/forgebyd/sculptr.git"  
+        "url": "git+https://github.com/forgebyd/sculptr.git"
     },
-
     "volta": {
         "node": "24.11.0",
         "pnpm": "10.20.0"
     },
-
     "engines": {
         "node": ">=24.0.0"
     },
@@ -27,6 +24,8 @@
         "biome.format": "biome format --write",
         "biome.lint": "biome lint --write --unsafe",
         "commit": "commit",
+        "package.list": "pnpm --recursive --depth=-1 list",
+        "package.lint": "pnpm --recursive --filter @sculptr/* package.lint",
         "prepare": "husky",
         "typecheck": "tsc --noEmit"
     },
@@ -37,6 +36,7 @@
         "@commitlint/prompt-cli": "^20.1.0",
         "husky": "^9.1.7",
         "lint-staged": "^16.2.6",
+        "publint": "^0.3.15",
         "tsdown": "^0.16.0",
         "typescript": "^5.9.3"
     }
