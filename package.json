@@ -27,7 +27,7 @@
         "package.list": "pnpm --recursive --depth=-1 list",
         "package.lint": "pnpm --recursive --filter @sculptr/* package.lint",
         "prepare": "husky",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit && echo 'Typecheck passed!'"
     },
     "devDependencies": {
         "@biomejs/biome": "^2.3.4",
