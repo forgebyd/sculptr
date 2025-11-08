@@ -1,4 +1,4 @@
 {
-    "*.ts": ["pnpm run typecheck", "pnpm run biome.check"],
+    "*.ts": ["bash -c 'pnpm run typecheck'", "pnpm run biome.check"],
     "*.{js,json}": ["pnpm run biome.check"]
 }
