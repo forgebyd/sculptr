@@ -1,0 +1,52 @@
+{
+    "name": "@sculptr/cli",
+    "description": "Sculptr CLI package",
+    "version": "0.0.0",
+    "type": "module",
+    "author": {
+        "name": "Dwi Payana",
+        "email": "ini.dwiii@gmail.com",
+        "url": "https://github.com/forgebyd"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/forgebyd/sculptr.git"
+    },
+    "volta": {
+        "node": "24.11.0",
+        "pnpm": "10.20.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.cjs",
+    "module": "dist/index.mjs",
+    "typings": "dist/index.d.cts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs",
+            "default": "./dist/index.cjs"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "dist",
+        "LICENSE.md",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "tsdown --config ./tsdown.config.ts",
+        "dev": "tsx source/index.ts",
+        "start": "node dist/index.mjs",
+        "package.lint": "publint"
+    },
+    "dependencies": {
+        "@gunshi/bone": "^0.26.3",
+        "@gunshi/definition": "^0.26.3",
+        "@gunshi/plugin": "^0.26.3",
+        "@gunshi/plugin-global": "^0.26.3",
+        "@gunshi/plugin-renderer": "^0.26.3",
+        "chalk": "^5.6.2"
+    }
+}
