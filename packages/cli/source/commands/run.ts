@@ -1,42 +1,42 @@
-import type { Command, CommandLoader, DefaultGunshiParams } from '@gunshi/bone';
-import { define, lazy } from '@gunshi/definition';
+import {
+  type CommandLoader,
+  type DefaultGunshiParams,
+  define,
+  lazy,
+} from '@gunshi/definition';
 import chalk from 'chalk';
 
-const commandDefinition: Command = define({
+const commandDefinition = define({
   name: 'run',
-  description: 'Run file generator',
+  description: 'Run generator specified by its name',
   args: {
     generator: {
       type: 'positional',
-      description: 'Name of the file generator to run',
+      description: 'Name of the generator to run',
     },
-  } as DefaultGunshiParams['args'],
-  examples: (ctx) => {
-    return [
-      'Basic usage:',
-      chalk.dim(`$ pnpm sculptr ${ctx.name} my-generator`),
-      '',
-      'With options provided:',
-      chalk.dim(`$ pnpm sculptr ${ctx.name} my-generator -V`),
-      chalk.dim(`$ pnpm sculptr ${ctx.name} my-generator -D`),
-      chalk.dim(`$ pnpm sculptr ${ctx.name} my-generator -VD`),
-      '',
-      'With custom package manager:',
-      chalk.dim(`$ yarn sculptr ${ctx.name} my-generator`),
-      chalk.dim(`$ npm run sculptr -- ${ctx.name} my-generator`),
-      '',
-      'Note:',
-      "- Use '--dry' option to perform a dry run without making changes.",
-      "- Please note that 'pnpm' is optional and can be replaced",
-      '  with or without any package manager of your choice.',
-    ].join('\n');
   },
+  examples: (ctx) =>
+    [
+      'Basic Usage:',
+      chalk.dim(`$ pnpm ${ctx.env.name} ${ctx.name} my-generator`),
+      '',
+      'Use With Custom Options:',
+      chalk.dim(`$ pnpm ${ctx.env.name} ${ctx.name} my-generator --verbose`),
+      chalk.dim(`$ pnpm ${ctx.env.name} ${ctx.name} my-generator --dry`),
+      '',
+      'Use With Another Package Managers:',
+      chalk.dim(`$ yarn ${ctx.env.name} ${ctx.name} my-generator`),
+      chalk.dim(`$ yarn ${ctx.env.name} ${ctx.name} my-generator -V`),
+      chalk.dim(`$ npm run ${ctx.env.name} -- ${ctx.name} my-generator`),
+      chalk.dim(`$ npm run ${ctx.env.name} -- ${ctx.name} my-generator -V`),
+    ].join('\n'),
 });
 
-const commandLoader: CommandLoader = () => {
-  return (context) => {
-    console.log(context.name);
-  };
+const commandLoader: CommandLoader<
+  DefaultGunshiParams & typeof commandDefinition
+> = () => (ctx) => {
+  // TODO : Implement generator running logic here
+  console.log(ctx.values);
 };
 
 export default lazy(commandLoader, commandDefinition);

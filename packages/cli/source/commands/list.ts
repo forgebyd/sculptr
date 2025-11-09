@@ -1,25 +1,30 @@
-import type { Command, CommandLoader } from '@gunshi/bone';
-import { define, lazy } from '@gunshi/definition';
+import {
+  type CommandLoader,
+  type DefaultGunshiParams,
+  define,
+  lazy,
+} from '@gunshi/definition';
 import chalk from 'chalk';
 
-const commandDefinition: Command = define({
+const commandDefinition = define({
   name: 'list',
-  description: 'List file generators',
-  examples: (ctx) => {
-    return [
-      'Basic usage:',
-      chalk.dim(`$ pnpm sculptr ${ctx.name}`),
+  description: 'List all available generators',
+  examples: (ctx) =>
+    [
+      'Basic Usage:',
+      chalk.dim(`$ pnpm ${ctx.env.name} ${ctx.name}`),
       '',
-      'With options provided:',
-      chalk.dim(`$ pnpm sculptr ${ctx.name} -C sculptr.config.ts`),
-    ].join('\n');
-  },
+      'Use With Another Package Managers:',
+      chalk.dim(`$ yarn ${ctx.env.name} ${ctx.name}`),
+      chalk.dim(`$ npm run ${ctx.env.name} -- ${ctx.name}`),
+    ].join('\n'),
 });
 
-const commandLoader: CommandLoader = () => {
-  return (context) => {
-    console.log(context.name);
-  };
+const commandLoader: CommandLoader<
+  DefaultGunshiParams & typeof commandDefinition
+> = () => (ctx) => {
+  // TODO : Implement the logic to list all available generators
+  console.log(ctx.values);
 };
 
 export default lazy(commandLoader, commandDefinition);
