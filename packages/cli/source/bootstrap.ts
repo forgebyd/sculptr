@@ -1,8 +1,12 @@
-import { readdir } from 'node:fs/promises';
-import { basename, dirname, join, resolve } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
 import type { Command, LazyCommand } from '@gunshi/bone';
 import type { Plugin } from '@gunshi/plugin';
+import {
+  resolveCommandsDir,
+  resolveModuleName,
+  resolveModulePath,
+  resolvePluginsDir,
+  tapToDir,
+} from './utils/resolver.js';
 
 type BootstrapContext = {
   commands: Map<string, Command | LazyCommand>;
@@ -10,10 +14,6 @@ type BootstrapContext = {
 };
 
 type BootstrapCallback = (context: BootstrapContext) => void | Promise<void>;
-
-const srcDir = dirname(fileURLToPath(import.meta.url));
-const commandsDir = resolve(srcDir, 'commands');
-const pluginsDir = resolve(srcDir, 'plugins');
 
 /**
  * Resolve commands from the commands directory
@@ -23,15 +23,16 @@ const pluginsDir = resolve(srcDir, 'plugins');
  * @return {Promise<void>}
  */
 const resolveCommands = async (context: BootstrapContext): Promise<void> => {
-  for (const file of await readdir(commandsDir)) {
-    if (file.endsWith('.ts') || file.endsWith('.js')) {
-      const commandName = basename(file, file.endsWith('.ts') ? '.ts' : '.js');
-      const commandModule = await import(
-        pathToFileURL(join(commandsDir, file)).toString()
-      );
+  const dir = resolveCommandsDir(import.meta.dirname);
 
+  await tapToDir(dir, async (file) => {
+    if (file.endsWith('.ts') || file.endsWith('.js')) {
+      const commandName = resolveModuleName(file);
+      const commandPath = resolveModulePath(dir, file);
+      const commandModule = await import(commandPath);
+
+      // make sure the command has default exported
       if (!commandModule.default) {
-        // make sure the command has default exported
         throw new TypeError(
           `Command module "${commandName}" does not have a default export.`
         );
@@ -39,7 +40,7 @@ const resolveCommands = async (context: BootstrapContext): Promise<void> => {
 
       context.commands.set(commandName, commandModule.default);
     }
-  }
+  });
 };
 
 /**
@@ -50,15 +51,16 @@ const resolveCommands = async (context: BootstrapContext): Promise<void> => {
  * @return {Promise<void>}
  */
 const resolvePlugins = async (context: BootstrapContext): Promise<void> => {
-  for (const file of await readdir(pluginsDir)) {
-    if (file.endsWith('.ts') || file.endsWith('.js')) {
-      const pluginName = basename(file, file.endsWith('.ts') ? '.ts' : '.js');
-      const pluginModule = await import(
-        pathToFileURL(join(pluginsDir, file)).toString()
-      );
+  const dir = resolvePluginsDir(import.meta.dirname);
 
+  await tapToDir(dir, async (file) => {
+    if (file.endsWith('.ts') || file.endsWith('.js')) {
+      const pluginName = resolveModuleName(file);
+      const pluginPath = resolveModulePath(dir, file);
+      const pluginModule = await import(pluginPath);
+
+      // make sure the plugin has a default exported
       if (!pluginModule.default) {
-        // make sure the plugin has a default exported
         throw new TypeError(
           `Plugin module "${pluginName}" does not have a default export.`
         );
@@ -66,7 +68,7 @@ const resolvePlugins = async (context: BootstrapContext): Promise<void> => {
 
       context.plugins.push(pluginModule.default);
     }
-  }
+  });
 };
 
 export default async (callback: BootstrapCallback): Promise<void> => {
