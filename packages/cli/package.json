@@ -19,6 +19,9 @@
     "publishConfig": {
         "access": "public"
     },
+    "bin": {
+        "sculptr": "./dist/index.mjs"
+    },
     "main": "dist/index.cjs",
     "module": "dist/index.mjs",
     "typings": "dist/index.d.cts",
